@@ -26,8 +26,8 @@ export const getAllBooks = async (req, res, next) => {
 
 export const getBookId = async (req, res, next) => {
     try {
-        const book = await BookModel.findById();
-        if (book){
+        const book = await BookModel.findById('Title');
+        if (!book){
             res.json(book);
         } 
         else {
@@ -40,5 +40,32 @@ export const getBookId = async (req, res, next) => {
 
 
 export const updateBook = async (req, res, next) => {
-    const book = await BookModel.findByIdAndUpdate(req.body)
+    try {
+        const { id } = req.params;
+    
+        const book = await BookModel.findByIdAndUpdate(id, req.body);
+    
+        if (!book) {
+          return res.status(404).send("Book not found");
+        }
+        return res.status(201).send("Updated successfully");
+      } catch (error) {
+        return res.status(500).send({ error: "Failed to find" });
+      }
+}
+
+
+export  const deleteBook = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+    
+        const book = await BookModel.findByIdAndDelete(id);
+    
+        if (!book) {
+          return res.status(404).send("Book not found");
+        }
+        return res.status(201).send("Deleted successfully");
+      } catch (error) {
+        return res.status(500).send({ error: "Failed to find" }); // Send an error response
+      }
 }
