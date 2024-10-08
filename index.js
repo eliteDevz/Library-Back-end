@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // use routes
-
+app.use(authorRouter);
 
 // listening
 app.listen(3002, () => {

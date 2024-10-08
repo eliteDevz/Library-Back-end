@@ -1,63 +1,65 @@
-import { Author } from '../models/author_model.js';
+import { AuthorModel } from '../models/author_model.js';
 import { authorRouter } from '../routes/author_routes.js';
 
 // Create all AUthors by post
 export const postAllAuthor = async (req, res, next) => {
     try {
-        const author = new authorModel(req.body);
+        const author = new AuthorModel(req.body);
         await author.save();
         console.log(req.body);
-        res.status(201).json('author name not showing');
+        res.status(201).json({ message: 'Author created successfully', author });
     } catch (error) {
-       next(error); 
+        next(error);
     }
 };
-
-// export const postAllAuthors = async (req, res) => {
-//     const author = new Author(req.body)
-//     const authors = await author.save()
-//     res.status(201).json(authors);
-// }
 
 // Get all authors
-export const getAllAuthors = async (req, res) => {
+export const getAllAuthors = async (req, res, next) => {
     try {
-        const authors = await Author.find();
-        res.status(200).json('author name showing');
+        const author = new AuthorModel(req.body);
+        await author.find();
+        console.log(req.body);
+        res.status(201).json({ message: 'Author added successfully', author });
     } catch (error) {
-        res.status(201).json({ message: error.message });
+        next(error);
     }
 };
 
+
+
 // Get a single author by ID
-export const getAuthorById = async (req, res) => {
+export const getAuthorById = async (req, res, next) => {
     try {
-        const author = await Author.findById(req.params.id);
-        if (!author) return res.status(404).json({ message: 'Author not found' });
-        res.status(200).json(author);
+        const author = new AuthorModel(req.body);
+        await author.find();
+        console.log(req.body);
+        res.status(201).json({ message: 'Author added single successfully', author });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        next(error);
     }
 };
 
 // Update an author by ID
-export const updateSingleAuthor = async (req, res) => {
+export const updateSingleAuthor = async (req, res, next) => {
     try {
-        const author = await Author.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!author) return res.status(404).json({ message: 'Author not found' });
-        res.status(200).json(author);
+        const author = new AuthorModel(req.body);
+        await author.add();
+        console.log(req.body);
+        res.status(201).json({ message: 'Author updated successfully', author });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        next(error);
     }
 };
 
 // Delete an author by ID
-export const deleteSingleAuthor = async (req, res) => {
+
+export const deleteSingleAuthor = async (req, res, next) => {
     try {
-        const author = await Author.findByIdAndDelete(req.params.id);
-        if (!author) return res.status(404).json({ message: 'Author not found' });
-        res.status(200).json({ message: 'Author deleted successfully' });
+        const author = new AuthorModel(req.body);
+        await author.remove();
+        console.log(req.body);
+        res.status(201).json({ message: 'Author created successfully', author });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        next(error);
     }
 };

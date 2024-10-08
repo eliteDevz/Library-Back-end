@@ -8,4 +8,4 @@ const authorSchema = ({
     createdAt: { type: Date, default: Date.now },
 });
 
-export const Author = model('Author', authorSchema);
+export const AuthorModel = model('Author', authorSchema);
