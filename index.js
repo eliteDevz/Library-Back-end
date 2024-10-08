@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import { authorRouter } from "./routes/author_routes.js";
 
 // connection to database
 await mongoose.connect(process.env.MONGO_URI);
