@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(cors());
 
 // use routes
+app.use(reviewRouter);
+
 
 
 // listening
