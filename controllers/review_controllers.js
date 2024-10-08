@@ -1,15 +1,11 @@
-import { Schema} from "mongoose";
-
-import {Book, reviewModel} from "../models/review_model.js"
+import {reviewModel} from "../models/review_model.js"
 
 export const getAllReviews =async (req,res,next) => {
    try {
-    const review = new reviewModel(req.body)
-    await review.save();
-    console.log(req.body);
-     res.status(200).json('these are all the books');
+    const allReview = new reviewModel.find();
+    res.status(200).json(allReview)
    } catch (error) {
-    
+    next(error);
    }
 }
 

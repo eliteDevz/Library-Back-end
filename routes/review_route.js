@@ -5,6 +5,6 @@ export const reviewRouter = Router();
 
 reviewRouter.post('reviews',postAllReviews);
 reviewRouter.get('reviews',getAllReviews);
-reviewRouter.getId('reviews',getReviewById);
-reviewRouter.udateId('reviews',updateReviewById);
-reviewRouter.udateId('review',deleteReviewById);
+reviewRouter.get('reviews',getReviewById);
+reviewRouter.patch('reviews',updateReviewById);
+reviewRouter.delete('review',deleteReviewById);

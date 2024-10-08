@@ -14,6 +14,5 @@ const reviewSchema = new Schema({
 });
 
 
-export const Book = model('Book', reviewModel);
-export const reviewModel = model('Book', reviewModel);
+export const reviewModel = model('review', reviewSchema);
 
