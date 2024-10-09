@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addBook, getAllBooks, getBookId, updateBook, deleteBook } from "../controllers/book_controller.js";
+import { addBook, getBookId, updateBook, deleteBook, getBooks } from "../controllers/book_controller.js";
 
 
 export const booksRouter = Router();
@@ -7,9 +7,10 @@ export const booksRouter = Router();
 
 booksRouter.post('/books', addBook);
 
-booksRouter.get('/books', getAllBooks);
+booksRouter.get('/books', getBooks);
 
-booksRouter.get('/books/id', getBookId);
+booksRouter.get('/books/:id', getBookId);
+
 
 booksRouter.patch('/books/:id', updateBook);
 
