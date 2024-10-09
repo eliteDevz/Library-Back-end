@@ -18,7 +18,7 @@ app.use(cors());
 // use routes
 app.use(authorRouter);
 app.use(reviewRouter);
-app.use(authorRouter);
+app.use(booksRouter);
 
 // listening
 app.listen(3002, () => {
