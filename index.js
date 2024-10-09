@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 // use routes
-app.use(booksRouter);
+app.use(authorRouter);
 app.use(reviewRouter);
 app.use(authorRouter);
 
