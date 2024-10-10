@@ -1,5 +1,5 @@
 import { BookModel } from "../models/book_model.js";
-import { addBookvalidator } from "../validators/book_validator.js";
+import { addBookvalidator, updateBookvalidator } from "../validators/book_validator.js";
 import multer from "multer";
 
 
@@ -26,7 +26,7 @@ export const addBook = async (req, res, next) => {
         
         const newBook = new BookModel(value);
         const coverImage = req.file ? `/uploads/${req.file.filename}` : null;
-        const books = await newBook.save({title,genre,author,description,publisher,publishDate,pages,language,coverImage});
+        const books = await newBook.save();
     
         res.status(201).json(books);
     } catch (error) {
@@ -50,7 +50,7 @@ export const getBooks = async (req, res, next) => {
             query.author = {$regex:author, $options:'i'};
         }
 
-        const books = await BookModel.findAll(query).populate('author');
+        const books = await BookModel.find(query).populate('author');
         res.status(200).json(books);
     } catch (error) {
         res.status(500).json({message:'Error fetching books', error});
@@ -78,9 +78,15 @@ export const getBookId = async (req, res, next) => {
 
 export const updateBook = async (req, res, next) => {
     try {
+
+        const {error, value} = updateBookvalidator.validate(req.body);
+        if (error) {
+            return res.status(422).json(error);
+        }
+
         const { id } = req.params;
     
-        const book = await BookModel.findByIdAndUpdate(id, req.body);
+        const book = await BookModel.findByIdAndUpdate(id, value);
     
         if (book) {
           return res.status(404).send("Book not found");
