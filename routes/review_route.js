@@ -3,8 +3,8 @@ import { getAllReviews,getReviewById,postAllReviews,updateReviewById,deleteRevie
 
 export const reviewRouter = Router();
 
-reviewRouter.post('reviews', postAllReviews);
-reviewRouter.get('reviews', getAllReviews);
-reviewRouter.get('reviews/id', getReviewById);
-reviewRouter.patch('reviews/id', updateReviewById);
-reviewRouter.delete('reviews', deleteReviewById);
+reviewRouter.post('/reviews', postAllReviews);
+reviewRouter.get('/reviews', getAllReviews);
+reviewRouter.get('/reviews/id', getReviewById);
+reviewRouter.patch('/reviews/id', updateReviewById);
+reviewRouter.delete('/reviews/:id', deleteReviewById);
