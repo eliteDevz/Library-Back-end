@@ -1,10 +1,32 @@
 import { BookModel } from "../models/book_model.js";
+import { addBookvalidator } from "../validators/book_validator.js";
+import multer from "multer";
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/'); //stores files in 'uploads' folder
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, originalname); //unique name generation for each file
+    }
+});
+
+const upload = multer({storage: storage });
 
 
 export const addBook = async (req, res, next) => {
     try {
-        const newBook = new BookModel(req.body)
-        const books = await newBook.save()
+        
+        const {error, value} = addBookvalidator.validate(req.body);
+        if (error) {
+            return res.status(422).json(error);
+        }
+        
+        const newBook = new BookModel(value);
+        const coverImage = req.file ? `/uploads/${req.file.filename}` : null;
+        const books = await newBook.save({title,genre,author,description,publisher,publishDate,pages,language,coverImage});
     
         res.status(201).json(books);
     } catch (error) {
@@ -27,7 +49,8 @@ export const getBooks = async (req, res, next) => {
         if (author){
             query.author = {$regex:author, $options:'i'};
         }
-        const books = await BookModel.find(query);
+
+        const books = await BookModel.findAll(query).populate('author');
         res.status(200).json(books);
     } catch (error) {
         res.status(500).json({message:'Error fetching books', error});
@@ -40,7 +63,7 @@ export const getBookId = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const book = await BookModel.findById(id);
+        const book = await BookModel.findById(id).populate('author');
         if (book){
             res.status(200).json(book);
         } 
