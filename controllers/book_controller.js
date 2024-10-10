@@ -89,9 +89,8 @@ export const updateBook = async (req, res, next) => {
         const book = await BookModel.findByIdAndUpdate(id, value);
     
         if (book) {
-          return res.status(404).send("Book not found");
+            return res.status(201).send("Updated successfully");
         }
-        return res.status(201).send("Updated successfully");
       } catch (error) {
         return res.status(500).send({ error: "Failed to find" });
       }
@@ -105,9 +104,8 @@ export  const deleteBook = async (req, res, next) => {
         const book = await BookModel.findByIdAndDelete(id);
     
         if (book) {
-          return res.status(404).send("Book not found");
+            return res.status(201).send("Deleted successfully");
         }
-        return res.status(201).send("Deleted successfully");
       } catch (error) {
         return res.status(500).send({ error: "Failed to find" });
       }
